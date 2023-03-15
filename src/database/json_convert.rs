@@ -1,23 +1,30 @@
+use super::DB;
 use std::str::from_utf8;
 
-use super::DB;
-
 impl DB {
-    pub fn to_json(self) -> String {
+    //output:
+    //    "name": {
+    //        "key": "value",
+    //        "key": "value"
+    //    }
+    pub fn to_json_object(&self) -> String {
         let c = self.get_all();
         let mut ret = String::new();
-        ret += "{\n    \"";
+        ret += "    \"";
         ret += self.name.as_str();
-        ret += "\":{\n";
-        for p in c {
+        ret += "\": {\n";
+        for (i, p) in c.iter().enumerate() {
             ret += "        \"";
-            ret += p.0.as_str();
+            ret += &p.0;
             ret += "\": \"";
             ret += from_utf8(&p.1).expect("Failed to get data");
-            ret += "\",\n"
+            if i == c.len()-1 {
+                ret += "\"\n";
+            } else {
+                ret += "\",\n";
+            }
         }
-        ret += "    }\n";
-        ret += "}\n";
+        ret += "    }";
         return ret
     }
 }

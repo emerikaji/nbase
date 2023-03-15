@@ -1,9 +1,10 @@
 mod file_interaction;
 mod json_convert;
+
 ////DATABASE////
 pub struct DB{
-    name: String,
-    collection: Vec<(String,Vec<u8>)>
+    pub name: String,
+    pub collection: Vec<(String,Vec<u8>)>
 }
 impl DB {
     ////DATABASE METHODS////
