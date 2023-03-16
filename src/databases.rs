@@ -2,7 +2,10 @@ use std::fs;
 use crate::database::DB;
 
 const SEP: u8 = 0x3b;
+#[cfg(feature = "altsep")]
+const SEP: u8 = 0x7c;
 
+// DBs is a group of DB stores
 pub struct DBs {
     name: String,
     pub db_list: Vec<DB>

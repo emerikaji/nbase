@@ -1,6 +1,8 @@
 use super::DB;
 use std::fs;
 const SEP: u8 = 0x3b;
+#[cfg(feature = "altsep")]
+const SEP: u8 = 0x7c;
 
 impl DB {
     pub fn read_from_file(s: String) -> DB {

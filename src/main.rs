@@ -4,8 +4,9 @@ use database::DB;
 mod databases;
 use databases::DBs;
 
-fn cli() {
-    let args: Vec<String> = env::args().collect();
+// This file is an example implementation of nBase with a simple cli.
+
+fn cli(args: Vec<String>) { // nbase usage_case name [command] [option | key | key value...]
     if args.len() < 3 {
         panic!()
     }
@@ -109,7 +110,7 @@ fn cli() {
                         println!("Wrong number of arguments");
                         return
                     }
-                    if db.rem(args[4].clone()) {
+                    if db.remm(args[4].clone()) {
                         println!("Pop successful, writing into file . . .");
                         db.write_to_file()
                     } else {
@@ -143,20 +144,6 @@ fn cli() {
 }
 
 fn main() {
-    /*
-    let mut nishy = DB::new("Nishy".to_string());
-    let mut linuxcat = DB::new("LinuxCat".to_string());
-    let mut nefa = DB::new("Nefa".to_string());
-    nishy.add("haha".to_string(), "jonathan".as_bytes().to_vec());
-    linuxcat.add("money".to_string(), "very much a lot".as_bytes().to_vec());
-    nefa.add("grades".to_string(), "very good".as_bytes().to_vec());
-    let mut many = DBs::new("many".to_string());
-    many.db_list.push(nishy);
-    many.db_list.push(linuxcat);
-    many.db_list.push(nefa);
-    many.write_to_file();
-    let nishy2 = DBs::read_from_file("many".to_string());
-    nishy2.to_json_file();
-    */
-    cli()
+    let args: Vec<String> = env::args().collect();
+    cli(args) // Haha jonathan you're parsing my command line args
 }

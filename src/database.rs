@@ -1,13 +1,20 @@
+#[cfg(feature = "file")]
 mod file_interaction;
+#[cfg(feature = "json")]
 mod json_convert;
+const SEP: u8 = 0x3b;
+#[cfg(feature = "altsep")]
+const SEP: u8 = 0x7c;
 
-////DATABASE////
+/// Represents a key/value store
 pub struct DB{
+    /// The name of the store will be used as the name of the file
     pub name: String,
+    /// Key/value pairs are stored in a vec. Keys are always strings, values can be anything
     pub collection: Vec<(String,Vec<u8>)>
 }
 impl DB {
-    ////DATABASE METHODS////
+    /// Creates a new DB
     pub fn new(s: String) -> DB {
         let new_db = DB {
             name: s,
@@ -38,6 +45,9 @@ impl DB {
     }
 
     pub fn add(&mut self, k: String, v: Vec<u8>) -> bool {
+        if k.contains(SEP as char) || v.contains(&SEP) {
+            return false
+        }
         if self.get(k.clone()).0 == None {
             self.collection.push((k,v));
             return true
@@ -46,6 +56,9 @@ impl DB {
     }
 
     pub fn upd(&mut self, k: String, v: Vec<u8>) -> bool {
+        if v.contains(&SEP) {
+            return false
+        }
         let (o, i) = self.get(k);
         if o == None {
             return false
@@ -54,7 +67,7 @@ impl DB {
         true
     }
 
-    pub fn rem(&mut self, k: String) -> bool {
+    pub fn remm(&mut self, k: String) -> bool {
         let (o, i) = self.get(k);
         if o == None {      
             return false
