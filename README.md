@@ -34,3 +34,4 @@ nBase is written in rust and the files are written and compressed with the [mini
 - Data type support (inserting json arrays is possible, but it isn't considered a true array and as such isn't language-agnostic)
 - Create python and golang libraries
 - Stop usage of ";" at the program level
+- Make all writing instructions atomic
